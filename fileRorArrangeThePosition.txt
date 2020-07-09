@@ -1,0 +1,10 @@
+white king b3
+white rook d7
+white knight c6
+white pawn h4
+black king a8
+black bishop c8
+black pawn a7
+black pawn b6
+black pawn h5
+BLACK

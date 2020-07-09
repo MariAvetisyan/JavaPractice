@@ -2,13 +2,8 @@ import enums.ChessColor;
 import exeptions.InvalidFigureMovementException;
 import exeptions.NoFigureException;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 /**
  * Created by mari.avetisyan on 02/07/2020.
@@ -51,7 +46,7 @@ public class Game {
     private ChessFigure blackPawn7   = new Pawn(ChessColor.BLACK, "g7");
     private ChessFigure blackPawn8   = new Pawn(ChessColor.BLACK, "h7");
 
-    private void initGame() {
+    void initGame() {
         List<ChessFigure> figures = new ArrayList<ChessFigure>();
         Collections.addAll(figures, whiteKing, whiteQueen, whiteRook1, whiteRook2, whiteBishop1, whiteBishop2, whiteKnight1, whiteKnight2,
                 whitePawn1, whitePawn2, whitePawn3, whitePawn4, whitePawn5, whitePawn6, whitePawn7, whitePawn8,
@@ -67,7 +62,6 @@ public class Game {
     }
 
     void startGame() {
-        initGame();
         System.out.println("The game is started. Have a good game. In case you want to finish, please enter 'End'.");
 
         try {
@@ -139,5 +133,56 @@ public class Game {
         } catch (IOException e) {
             System.err.println("Something gonna wrong. File cannot be created.");
         }
+    }
+
+    void arrangeThePosition()throws Exception {
+        FileReader fr = new FileReader("fileRorArrangeThePosition.txt");
+        BufferedReader br=new BufferedReader(fr);
+        List<String> listOfFileLines = new ArrayList<>();
+        String[] arrOfFileLines;
+        String fileLine;
+
+        while((fileLine = br.readLine()) != null){
+            fileLine = fileLine.trim();
+            if ((fileLine.length()!=0))
+            {
+                listOfFileLines.add(fileLine);
+            }
+        }
+        arrOfFileLines = (String[])listOfFileLines.toArray(new String[listOfFileLines.size()]);
+        Map<String, ChessFigure> map = new HashMap<>();
+        for(int i = 0; i < arrOfFileLines.length; ++i) {
+            String[] tempArray;
+            tempArray = arrOfFileLines[i].split(" ");
+            if(tempArray.length == 3) {
+                switch (tempArray[1].toLowerCase()) {
+                    case "king":
+                        map.put("figure" + i, new King(ChessColor.valueOf(tempArray[0].toUpperCase()), tempArray[2]));
+                        break;
+                    case "queen":
+                        map.put("figure" + i, new Queen(ChessColor.valueOf(tempArray[0].toUpperCase()), tempArray[2]));
+                        break;
+                    case "rook":
+                        map.put("figure" + i, new Rook(ChessColor.valueOf(tempArray[0].toUpperCase()), tempArray[2]));
+                        break;
+                    case "bishop":
+                        map.put("figure" + i, new Bishop(ChessColor.valueOf(tempArray[0].toUpperCase()), tempArray[2]));
+                        break;
+                    case "knight":
+                        map.put("figure" + i, new Knight(ChessColor.valueOf(tempArray[0].toUpperCase()), tempArray[2]));
+                        break;
+                    case "pawn":
+                        map.put("figure" + i, new Pawn(ChessColor.valueOf(tempArray[0].toUpperCase()), tempArray[2]));
+                        break;
+                }
+            } else {
+                isWhiteLine = tempArray[0].toLowerCase().equals("white");
+            }
+        }
+        List<ChessFigure> figures = new ArrayList<ChessFigure>(map.values());
+        chessBoard.placeFigures(figures);
+        startGame();
+        br.close();
+        fr.close();
     }
 }
