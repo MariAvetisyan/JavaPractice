@@ -2,51 +2,37 @@
  * Created by mari.avetisyan on 24/06/2020.
  */
 public class ChessBoardCell implements IBoardCell {
-    private ChessFigure figure;
-    private int x;
-    private int y;
+    private ChessFigure cellFigure;
+    private Position cellPosition;
 
-    ChessBoardCell(int xPos, int yPos, ChessFigure figure) {
-        setX(xPos);
-        setY(yPos);
+    ChessBoardCell(int positionX, int positionY, ChessFigure figure) {
+        setPosition(positionX, positionY);
         setFigure(figure);
     }
 
-    public ChessFigure getFigure() {
-        return this.figure;
-    }
-
     public void setFigure(ChessFigure figure) {
-        this.figure = figure;
+        this.cellFigure = figure;
     }
 
-    public int getX() {
-        return x;
+    public ChessFigure getFigure() {
+        return this.cellFigure;
     }
 
-    public void setX(int xPosition) {
-        if(xPosition >= 1 && xPosition <=8)  {
-            this.x = xPosition;
-        } else {
-            System.err.println("Your entered xPosition is invalid.");
+    public void setPosition(int positionX, int positionY) {
+        ++positionY;
+        String position = ((char)(65+positionX)) + "" + positionY;
+        this.cellPosition = new Position(position);
+        if(!isCellEmpty()) {
+            cellFigure.setFigurePosition(this.cellPosition);
         }
     }
 
-    public int getY() {
-        return y;
+    public Position getPosition() {
+        return this.cellPosition;
     }
 
-    public void setY(int yPosition) {
-        if(yPosition >= 1 && yPosition <=8)  {
-            this.y = yPosition;
-        } else {
-            System.err.println("Your entered yPosition is invalid.");
-        }
-
-    }
-
-    public boolean isCellEmptyn() {
-        return this.figure == null;
+    public boolean isCellEmpty() {
+        return this.cellFigure == null;
     }
 
 }

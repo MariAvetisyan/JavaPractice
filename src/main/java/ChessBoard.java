@@ -9,7 +9,7 @@ import java.util.List;
  */
 class ChessBoard implements IBoard<ChessFigure> {
     private ChessBoardCell[][] board;
-    public static String movement;
+    static String movement;
 
     ChessBoard(int xSize, int ySize) {
         board = new ChessBoardCell[xSize][ySize];
@@ -20,7 +20,7 @@ class ChessBoard implements IBoard<ChessFigure> {
     public void createBoard() {
         for(int i = 0; i < board.length; ++i) {
             for(int j = 0; j < board[i].length; ++j) {
-                board[i][j] = new ChessBoardCell(i+1 , j+1, null);
+                board[i][j] = new ChessBoardCell(i , j, null);
             }
         }
     }
@@ -30,7 +30,7 @@ class ChessBoard implements IBoard<ChessFigure> {
         for(int i = 0; i < board.length; ++i) {
             System.out.print(i+1 + "| ");
             for(int j = 0; j < board[i].length; ++j) {
-                if(board[i][j].isCellEmptyn()) {
+                if(board[i][j].isCellEmpty()) {
                     System.out.print("*  ");
                 } else {
                     System.out.print(board[i][j].getFigure().getFigureType().toString().charAt(0) +""+ board[i][j].getFigure().getFigureType().toString().charAt(1)+ " ");
@@ -86,7 +86,7 @@ class ChessBoard implements IBoard<ChessFigure> {
     }
 
     public void isThereAFigureInPosition(Position a)throws NoFigureException {
-        if(board[a.getPositionY()-1][a.getPositionXNumericValue()].isCellEmptyn()) {
+        if(board[a.getPositionY()-1][a.getPositionXNumericValue()].isCellEmpty()) {
             throw new NoFigureException("No figure in current position");
         }
     }

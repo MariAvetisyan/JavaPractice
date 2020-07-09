@@ -16,8 +16,8 @@ class Position implements IPosition {
 
     public void setPosition(String position) {
         try {
-            isPositionValid(position);
-            this.position = position;
+            isPositionValid(position.toLowerCase());
+            this.position = position.toLowerCase();
         } catch (InvalidPositionException e) {
             System.err.println(e);
         }

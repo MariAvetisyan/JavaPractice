@@ -6,14 +6,14 @@ public class MainClass {
         Game game = new Game();
 
         //In case if you want to play a game from beginning
-//        game.initGame();
-//        game.startGame();
+        game.initGame();
+        game.startGame();
 
         //In case if you want to play a game from several position
-        try {
-            game.arrangeThePosition();
-        } catch (Exception e) {
-            System.out.print(e);
-        }
+//        try {
+//            game.arrangeThePosition();
+//        } catch (Exception e) {
+//            System.out.print(e);
+//        }
     }
 }

@@ -15,9 +15,9 @@ public class ChessBoardCellTest {
     private ChessBoardCell cell3 = new ChessBoardCell(1, 5, null);
 
     @Test
-    public void isCellEmptyn() {
-        assertEquals(false, cell1.isCellEmptyn());
-        assertEquals(false, cell2.isCellEmptyn());
-        assertEquals(true, cell3.isCellEmptyn());
+    public void isCellEmpty() {
+        assertEquals(false, cell1.isCellEmpty());
+        assertEquals(false, cell2.isCellEmpty());
+        assertEquals(true, cell3.isCellEmpty());
     }
 }
