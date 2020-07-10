@@ -13,9 +13,9 @@ class King extends ChessFigure {
 
     @Override
     void canMove(Position nextPosition) throws InvalidFigureMovementException {
-        if (getFigurePosition().isPositionsEqual(nextPosition) || !(getFigurePosition().getPositionX() + 1 >= nextPosition.getPositionX() && getFigurePosition().getPositionX() - 1 <= nextPosition.getPositionX()) &&
+        if (!getFigurePosition().isPositionsEqual(nextPosition) || !(getFigurePosition().getPositionX() + 1 >= nextPosition.getPositionX() && getFigurePosition().getPositionX() - 1 <= nextPosition.getPositionX()) &&
                 (getFigurePosition().getPositionY() + 1 >= nextPosition.getPositionY() && getFigurePosition().getPositionY() - 1 <= nextPosition.getPositionY())) {
-            throw new InvalidFigureMovementException("Your enterder position is invalid. " + getFigureType() + " cant go from" + getFigurePosition().toString() + " to " + nextPosition.toString());
+            throw new InvalidFigureMovementException("Your entered position is invalid. " + getFigureType() + " cant go from " + getFigurePosition().toString() + " to " + nextPosition.toString());
         }
     }
 }

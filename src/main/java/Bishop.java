@@ -1,6 +1,7 @@
 import enums.ChessColor;
 import enums.ChessFiguresType;
 import exeptions.InvalidFigureMovementException;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by mari.avetisyan on 02/07/2020.
@@ -18,7 +19,7 @@ public class Bishop extends ChessFigure {
                     || (nextPosition.getPositionX() == getFigurePosition().getPositionX() - i && nextPosition.getPositionY() == getFigurePosition().getPositionY() - i)
                     || (nextPosition.getPositionX() == getFigurePosition().getPositionX() - i && nextPosition.getPositionY() == getFigurePosition().getPositionY() + i)
                     || (nextPosition.getPositionX() == getFigurePosition().getPositionX() + i && nextPosition.getPositionY() == getFigurePosition().getPositionY() - i))) {
-                throw new InvalidFigureMovementException("Your enterder position is invalid. " + getFigureType() + " cant go from" + getFigurePosition().toString() + " to " + nextPosition.toString());
+                throw new InvalidFigureMovementException("Your entered position is invalid. " + getFigureType() + " cant go from " + getFigurePosition().toString() + " to " + nextPosition.toString());
             }
         }
     }

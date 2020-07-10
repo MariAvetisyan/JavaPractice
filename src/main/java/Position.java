@@ -1,9 +1,13 @@
 import exeptions.InvalidPositionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Created by mari.avetisyan on 24/06/2020.
  */
 class Position implements IPosition {
+    private static final Logger LOG = LoggerFactory.getLogger(Position.class);
     private String position;
 
     Position(String position) {
@@ -19,7 +23,7 @@ class Position implements IPosition {
             isPositionValid(position.toLowerCase());
             this.position = position.toLowerCase();
         } catch (InvalidPositionException e) {
-            System.err.println(e);
+            LOG.error(e.toString());
         }
     }
 

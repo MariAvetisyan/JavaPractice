@@ -21,7 +21,7 @@ class Knight extends ChessFigure {
                 nextPosition.getPositionX() == getFigurePosition().getPositionX() - 1 && nextPosition.getPositionY() == getFigurePosition().getPositionY() - 2 ||
                 nextPosition.getPositionX() == getFigurePosition().getPositionX() - 2 && nextPosition.getPositionY() == getFigurePosition().getPositionY() - 1 ||
                 nextPosition.getPositionX() == getFigurePosition().getPositionX() - 2 && nextPosition.getPositionY() == getFigurePosition().getPositionY() + 1)) {
-            throw new InvalidFigureMovementException("Your enterder position is invalid. " + getFigureType() + " cant go from" + getFigurePosition().toString() + " to " + nextPosition.toString());
+            throw new InvalidFigureMovementException("Your entered position is invalid. " + getFigureType() + " cant go from " + getFigurePosition().toString() + " to " + nextPosition.toString());
         }
     }
 }

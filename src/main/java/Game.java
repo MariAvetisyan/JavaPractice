@@ -1,6 +1,8 @@
 import enums.ChessColor;
 import exeptions.InvalidFigureMovementException;
 import exeptions.NoFigureException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
@@ -8,7 +10,8 @@ import java.util.*;
 /**
  * Created by mari.avetisyan on 02/07/2020.
  */
-public class Game {
+class Game {
+    private static final Logger LOG = LoggerFactory.getLogger(Game.class);
     static boolean isWhiteLine = true;
 
     private ChessBoard chessBoard   = new ChessBoard(8, 8);
@@ -47,12 +50,14 @@ public class Game {
     private ChessFigure blackPawn8   = new Pawn(ChessColor.BLACK, "h7");
 
     void initGame() {
+        LOG.info("Start game initialisation");
         List<ChessFigure> figures = new ArrayList<ChessFigure>();
         Collections.addAll(figures, whiteKing, whiteQueen, whiteRook1, whiteRook2, whiteBishop1, whiteBishop2, whiteKnight1, whiteKnight2,
                 whitePawn1, whitePawn2, whitePawn3, whitePawn4, whitePawn5, whitePawn6, whitePawn7, whitePawn8,
                 blackKing, blackQueen, blackRook1, blackRook2, blackBishop1, blackBishop2, blackKnight1, blackKnight2,
                 blackPawn1, blackPawn2, blackPawn3, blackPawn4, blackPawn5, blackPawn6, blackPawn7, blackPawn8);
         chessBoard.placeFigures(figures);
+        LOG.info("Game is initialised");
     }
 
     private Position getPositionFromConsole(Scanner scanner, String positionType) {
@@ -62,9 +67,11 @@ public class Game {
     }
 
     void startGame() {
+        LOG.info("Start game.");
         System.out.println("The game is started. Have a good game. In case you want to finish, please enter 'End'.");
 
         try {
+            LOG.info("Create gameHistory folder for recording moves.");
             BufferedWriter gameHistory = new BufferedWriter(new FileWriter("gameHistory.txt"));
             while (true) {
                 chessBoard.printBoard();
@@ -75,6 +82,7 @@ public class Game {
                 Position currentPosition;
 
                 if(tmp1.toUpperCase().equals("END")) {
+                    LOG.info("Game is finished.");
                     break;
                 } else {
                     currentPosition = new Position(tmp1);
@@ -86,9 +94,10 @@ public class Game {
 
                         try {
                             chessBoard.isThereAFigureInPosition(currentPosition);
+                            LOG.info("Get current position.");
                             break;
                         } catch (NoFigureException e) {
-                            System.err.println(e);
+                            LOG.warn("Something gonna wrong. " + e);
                             currentPosition = getPositionFromConsole(scanner, "current");
                         }
                     }
@@ -100,38 +109,44 @@ public class Game {
                 Position nextPosition;
 
                 if(tmp2.toUpperCase().equals("END")) {
+                    LOG.info("Game is finished.");
                     break;
                 } else {
                     nextPosition = new Position(tmp2);
                     while(nextPosition.getPosition() == null) {
                         nextPosition = getPositionFromConsole(scanner, "next");
                     }
+                    LOG.info("Get next position.");
                 }
                 try {
                     if(isWhiteLine) {
+                        LOG.info("Now White’s move.");
                         if (chessBoard.getFigureOnCell(currentPosition).getFigureColor() == ChessColor.WHITE) {
                             chessBoard.moveFigure(currentPosition, nextPosition);
                             gameHistory.write(ChessBoard.movement);
                             isWhiteLine = false;
+                            LOG.info("White’s movement is done.");
                         } else {
-                            System.err.println("Now White’s move.");
+                            LOG.error("Now White’s move.");
                         }
                     } else {
+                        LOG.info("Now Black’s move.");
                         if (chessBoard.getFigureOnCell(currentPosition).getFigureColor() == ChessColor.BLACK) {
                             chessBoard.moveFigure(currentPosition, nextPosition);
                             gameHistory.write(ChessBoard.movement);
                             isWhiteLine = true;
+                            LOG.info("Black’s movement is done.");
                         } else {
-                            System.err.println("Now Black’s move.");
+                            LOG.error("Now Black’s move.");
                         }
                     }
                 } catch (InvalidFigureMovementException e) {
-                    System.err.println(e);
+                    LOG.error("Something gonna wrong. " + e);
                 }
             }
             gameHistory.close();
         } catch (IOException e) {
-            System.err.println("Something gonna wrong. File cannot be created.");
+            LOG.error("Something gonna wrong. GameHistory file cannot be created.");
         }
     }
 
@@ -173,6 +188,9 @@ public class Game {
                         break;
                     case "pawn":
                         map.put("figure" + i, new Pawn(ChessColor.valueOf(tempArray[0].toUpperCase()), tempArray[2]));
+                        break;
+                    default:
+                        LOG.error("You write invalid figure type. I cant arrange " + tempArray[1].toUpperCase() + " figure. Please recheck fileRorArrangeThePosition.txt file.");
                         break;
                 }
             } else {

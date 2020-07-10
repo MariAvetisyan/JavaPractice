@@ -16,7 +16,7 @@ class Pawn extends ChessFigure {
         if (!(getFigureColor() == ChessColor.WHITE && ((getFigurePosition().getPositionY() + 1 == nextPosition.getPositionY() || (getFigurePosition().getPositionY() == 2 && getFigurePosition().getPositionY() + 2 == nextPosition.getPositionY()))
                 && getFigurePosition().getPositionX() == nextPosition.getPositionX()) || (getFigureColor() == ChessColor.BLACK && ((getFigurePosition().getPositionY() - 1 == nextPosition.getPositionY() || (getFigurePosition().getPositionY() == 7 && getFigurePosition().getPositionY() - 2 == nextPosition.getPositionY()))
                 && getFigurePosition().getPositionX() == nextPosition.getPositionX())))) {
-            throw new InvalidFigureMovementException("Your enterder position is invalid. " + getFigureType() + " cant go from " + getFigurePosition().toString() + " to " + nextPosition.toString());
+            throw new InvalidFigureMovementException("Your entered position is invalid. " + getFigureType() + " cant go from " + getFigurePosition().toString() + " to " + nextPosition.toString());
         }
     }
 }

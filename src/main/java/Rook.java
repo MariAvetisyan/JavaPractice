@@ -14,7 +14,7 @@ class Rook extends ChessFigure {
     @Override
     void canMove(Position nextPosition)throws InvalidFigureMovementException {
         if(getFigurePosition().isPositionsEqual(nextPosition) || !(getFigurePosition().getPositionY() == nextPosition.getPositionY() || getFigurePosition().getPositionX() == nextPosition.getPositionX())) {
-            throw new InvalidFigureMovementException("Your enterder position is invalid. " + getFigureType() + " cant go from" + getFigurePosition().toString() + " to " + nextPosition.toString());
+            throw new InvalidFigureMovementException("Your entered position is invalid. " + getFigureType() + " cant go from " + getFigurePosition().toString() + " to " + nextPosition.toString());
         }
     }
 }

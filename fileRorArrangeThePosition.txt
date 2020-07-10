@@ -7,4 +7,4 @@ black bishop c8
 black pawn a7
 black pawn b6
 black pawn h5
-BLACK
+WHITE
